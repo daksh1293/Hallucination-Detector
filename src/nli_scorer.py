@@ -1,0 +1,66 @@
+from transformers import pipeline
+from retriever import get_evidence
+
+# Load NLI model (downloads once, ~1.6GB)
+print("Loading NLI model... (first time takes 2-3 mins)")
+nli_model = pipeline(
+    "zero-shot-classification",
+    model="facebook/bart-large-mnli"
+)
+print("Model loaded!")
+
+def check_hallucination(claim: str) -> dict:
+    # Get evidence from Wikipedia
+    evidence = get_evidence(claim)
+    
+    if "No evidence found" in evidence:
+        return {
+            "claim": claim,
+            "evidence": "No evidence found",
+            "support_score": 0.0,
+            "contradiction_score": 0.0,
+            "verdict": "UNVERIFIABLE"
+        }
+    
+    # Run NLI — does evidence support or contradict the claim?
+    result = nli_model(
+        evidence,
+        candidate_labels=[claim],
+        hypothesis_template="{}",
+    )
+    
+    # Use entailment pipeline directly
+    nli_input = f"premise: {evidence} hypothesis: {claim}"
+    scores = nli_model(
+        nli_input,
+        candidate_labels=["true", "false"]
+    )
+    
+    support_score = scores['scores'][0]
+    contradiction_score = scores['scores'][1]
+    
+    verdict = "✅ GROUNDED" if support_score > 0.5 else "❌ HALLUCINATION"
+    
+    return {
+        "claim": claim,
+        "evidence": evidence[:300],
+        "support_score": round(support_score, 3),
+        "contradiction_score": round(contradiction_score, 3),
+        "verdict": verdict
+    }
+
+# Test it
+if __name__ == "__main__":
+    test_claims = [
+        "Einstein was born in 1879 in Germany",
+        "The telephone was invented by Thomas Edison",
+        "Python programming language was created by Guido van Rossum"
+    ]
+    
+    for claim in test_claims:
+        print(f"\nClaim: {claim}")
+        result = check_hallucination(claim)
+        print(f"Verdict: {result['verdict']}")
+        print(f"Support: {result['support_score']} | Contradiction: {result['contradiction_score']}")
+        print(f"Evidence: {result['evidence'][:150]}...")
+        print("-" * 60)
