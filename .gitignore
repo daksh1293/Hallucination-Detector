@@ -2,5 +2,11 @@ venv/
 __pycache__/
 *.pyc
 .env
-*.csv
 data/raw/
+
+data/llama3-8b_results.csv
+data/llama3-70b_results.csv
+data/llama4-scout_results.csv
+data/llama3-8b_results_backup.csv
+data/llama3-70b_results_backup.csv
+data/llama4-scout_results_backup.csv
