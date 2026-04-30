@@ -1,0 +1,11 @@
+streamlit
+transformers
+torch
+wikipedia
+plotly
+pandas
+groq
+python-dotenv
+datasets
+scikit-learn
+sentence-transformers
