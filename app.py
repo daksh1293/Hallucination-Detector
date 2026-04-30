@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import sys, os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 from pipeline import run_pipeline
 from llm_response import get_all_models, get_model_display_name
