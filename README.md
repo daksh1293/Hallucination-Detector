@@ -1,3 +1,13 @@
+---
+title: Hallucination Detector
+emoji: 🔍
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
 # 🔍 LLM Hallucination Detector
 
 > *Cross-model factual consistency analysis using NLI-based evidence verification*
