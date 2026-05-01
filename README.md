@@ -21,7 +21,7 @@ pinned: false
 
 ## Abstract
 
-Large language models have demonstrated remarkable capabilities across a wide range of tasks, yet they remain prone to generating factually incorrect statements — a phenomenon commonly referred to as *hallucination*. This project presents an automated hallucination detection system that retrieves real-time evidence from Wikipedia and applies a Natural Language Inference (NLI) model to assess whether a given LLM response is factually supported or contradicted by that evidence.
+Large language models have demonstrated remarkable capabilities across a wide range of tasks, yet they remain prone to generating factually incorrect statements — a phenomenon commonly referred to as *hallucination*. This project presents an automated hallucination detection system that retrieves real-time evidence from Wikipedia and applies BART-large-mnli for Natural Language Inference to assess whether a given LLM response is factually supported or contradicted by that evidence.
 
 I evaluated three open-weight and API-accessible models — **LLaMA 3.1 8B**, **LLaMA 4 Scout 17B**, and **LLaMA 3.3 70B** — on a stratified sample of 100 questions drawn from the **TruthfulQA** benchmark (Lin et al., 2022), covering four knowledge domains: Science, History, Geography, and Technology. Our results reveal that model size does not reliably predict lower hallucination rates, and that domain-specific knowledge gaps vary significantly across architectures.
 
@@ -55,7 +55,7 @@ The question driving this work is straightforward but underexplored:
                └─────────────┬─────────────┘
                              │
           ┌──────────────────▼──────────────────┐
-          │   NLI Scorer (DeBERTa-v3-small)      │
+          │   NLI Scorer: BART-large-mnli (facebook)      │
           │   Premise:    Wikipedia evidence      │
           │   Hypothesis: LLM answer             │
           │   Output:     Entailment / Contradiction / Neutral │
@@ -129,7 +129,7 @@ Category mapping from TruthfulQA's 38 original categories to our 4 domains was p
 |---|---|---|
 | LLM Inference | Groq API | Fast inference for 3 models |
 | Evidence Retrieval | Wikipedia Python API | Real-time evidence fetching |
-| NLI Scoring | DeBERTa-v3-small (cross-encoder) | Factual consistency scoring |
+| NLI Scoring | BART-large-mnli (facebook) | Factual consistency scoring |
 | Evaluation | TruthfulQA benchmark | Standardised hallucination measurement |
 | Frontend | Streamlit + Plotly | Interactive research dashboard |
 | Deployment | HuggingFace Spaces (Docker) | Public live demo |

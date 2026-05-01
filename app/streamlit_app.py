@@ -351,8 +351,7 @@ with st.sidebar:
     st.markdown("""
     <div style="font-size:0.72rem; color:#4a5568; text-align:center; line-height:1.8;">
         Evaluated on TruthfulQA<br>
-        NLI: DeBERTa-v3-small<br>
-        Built for Stuttgart CL MSc
+        NLI: BART-large-mnli<br>
     </div>
     """, unsafe_allow_html=True)
 
@@ -658,7 +657,7 @@ elif page == "ℹ️ About":
         stack = [
             ("🤖", "LLMs", "LLaMA 3.1 8B, LLaMA 4 Scout, LLaMA 3.3 70B via Groq API"),
             ("🔎", "Retrieval", "Wikipedia API for evidence fetching"),
-            ("🧠", "NLI Model", "cross-encoder/nli-deberta-v3-small"),
+            ("🧠", "NLI Model", "cross-encoder/nli-BART-large-mnli"),
             ("📊", "Evaluation", "TruthfulQA benchmark, 100 questions"),
             ("🖥️", "Frontend", "Streamlit + Plotly"),
             ("☁️", "Deployment", "HuggingFace Spaces"),
