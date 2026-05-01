@@ -631,7 +631,7 @@ elif page == "ℹ️ About":
             factual consistency across multiple large language models using NLI-based verification.<br><br>
             
             The system retrieves Wikipedia evidence for any LLM-generated claim and uses a 
-            <strong>DeBERTa-v3-small NLI model</strong> to measure whether the evidence supports 
+            <strong>BART-large-mnli model</strong> to measure whether the evidence supports 
             or contradicts the claim — generating a hallucination verdict in real time.<br><br>
             
             <strong style="color:#7c4dff;">Research Contribution:</strong> We evaluate 3 LLMs of varying sizes 
