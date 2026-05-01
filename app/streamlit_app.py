@@ -657,7 +657,7 @@ elif page == "ℹ️ About":
         stack = [
             ("🤖", "LLMs", "LLaMA 3.1 8B, LLaMA 4 Scout, LLaMA 3.3 70B via Groq API"),
             ("🔎", "Retrieval", "Wikipedia API for evidence fetching"),
-            ("🧠", "NLI Model", "cross-encoder/nli-BART-large-mnli"),
+            ("🧠", "NLI Model", "facebook/nli-BART-large-mnli"),
             ("📊", "Evaluation", "TruthfulQA benchmark, 100 questions"),
             ("🖥️", "Frontend", "Streamlit + Plotly"),
             ("☁️", "Deployment", "HuggingFace Spaces"),
