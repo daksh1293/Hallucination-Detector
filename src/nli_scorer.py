@@ -10,27 +10,25 @@ nli_model = pipeline(
 print("Model loaded!")
 
 def check_hallucination(claim: str) -> dict:
-    # Get evidence from Wikipedia
     evidence = get_evidence(claim)
     
-    if "No evidence found" in evidence:
+    # Catch ALL cases where evidence is missing/invalid
+    if (not evidence or 
+        "No evidence found" in evidence or 
+        "Error" in evidence or
+        "No Wikipedia" in evidence or
+        len(evidence.strip()) < 50):
         return {
             "claim": claim,
             "evidence": "No evidence found",
             "support_score": 0.0,
             "contradiction_score": 0.0,
-            "verdict": "UNVERIFIABLE"
+            "verdict": "⚠️ UNVERIFIABLE"
         }
     
-    # Run NLI — does evidence support or contradict the claim?
-    result = nli_model(
-        evidence,
-        candidate_labels=[claim],
-        hypothesis_template="{}",
-    )
-    
-    # Use entailment pipeline directly
-    nli_input = f"premise: {evidence} hypothesis: {claim}"
+    # Rest of your existing code stays the same...
+    evidence_short = evidence[:400]
+    nli_input = f"premise: {evidence_short} hypothesis: {claim}"
     scores = nli_model(
         nli_input,
         candidate_labels=["true", "false"]
@@ -43,12 +41,11 @@ def check_hallucination(claim: str) -> dict:
     
     return {
         "claim": claim,
-        "evidence": evidence[:300],
+        "evidence": evidence_short,
         "support_score": round(support_score, 3),
         "contradiction_score": round(contradiction_score, 3),
         "verdict": verdict
     }
-
 # Test it
 if __name__ == "__main__":
     test_claims = [
